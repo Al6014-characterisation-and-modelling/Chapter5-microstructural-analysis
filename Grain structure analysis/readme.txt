@@ -1,0 +1,1 @@
+This script in MTex produces a csv file with equivalent diameter and aspect ratio data that is used for the jupyter notebook for the statistical plots
