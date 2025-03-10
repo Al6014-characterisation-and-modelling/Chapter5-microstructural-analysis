@@ -1,0 +1,8 @@
+Grain structure analysis/BA_3D/BA_microstructure_cleanfilled.dream3d
+Grain structure analysis/NoBA_3D/NoBA_microstructure_cleanfilled.dream3d
+Grain structure analysis/NoBA_3D/NoBA_microstructure_cleanfilled.xdmf
+Grain structure analysis/BA_3D/BA_microstructure_cleanfilled.xdmf
+Grain structure analysis/NoBA_3D/NoBA_microstructure_cleanfilled_areas.dream3d
+Grain structure analysis/BA_3D/BA_microstructure_cleanfilled_areas.dream3d
+*.xdmf
+*.dream3d
