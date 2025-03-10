@@ -383,6 +383,24 @@
         "SurfaceAreaVolumeRatioArrayName": "SurfaceAreaVolumeRatio"
     },
     "4": {
+        "CreatedArrayName": "Sphericity",
+        "FeatureIdsArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "FeatureIds",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "FilterVersion": "1.2.828",
+        "Filter_Enabled": true,
+        "Filter_Human_Label": "Create Element Array from Feature Array",
+        "Filter_Name": "CopyFeatureArrayToElementArray",
+        "Filter_Uuid": "{99836b75-144b-5126-b261-b411133b5e8a}",
+        "SelectedFeatureArrayPath": {
+            "Attribute Matrix Name": "CellFeatureData",
+            "Data Array Name": "Sphericity",
+            "Data Container Name": "ImageDataContainer"
+        }
+    },
+    "5": {
         "FeatureIdsArrayPath": {
             "Attribute Matrix Name": "CellData",
             "Data Array Name": "FeatureIds",
@@ -400,7 +418,7 @@
         },
         "Plane": 1
     },
-    "5": {
+    "6": {
         "FeatureIdsArrayPath": {
             "Attribute Matrix Name": "CellData",
             "Data Array Name": "FeatureIds",
@@ -418,19 +436,19 @@
         },
         "Plane": 2
     },
-    "6": {
+    "7": {
         "FilterVersion": "1.2.828",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Write DREAM.3D Data File",
         "Filter_Name": "DataContainerWriter",
         "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
-        "OutputFile": "C:\\Users\\GlassDesktop\\Documents\\GitHub\\Chapter5-analysis\\Grain structure analysis\\BA_3D\\BA_microstructure_cleanfilled_shape.dream3d",
+        "OutputFile": "C:\\Users\\GlassDesktop\\Documents\\GitHub\\Chapter5-analysis\\Grain structure analysis\\BA_3D\\BA_microstructure_cleanfilled_grainshape.dream3d",
         "WriteTimeSeries": 0,
         "WriteXdmfFile": 1
     },
     "PipelineBuilder": {
-        "Name": "Find_areas",
-        "Number_Filters": 7,
+        "Name": "Grain_shape",
+        "Number_Filters": 8,
         "Version": 6
     }
 }
