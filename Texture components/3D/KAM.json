@@ -5,7 +5,7 @@
         "Filter_Human_Label": "Read DREAM.3D Data File",
         "Filter_Name": "DataContainerReader",
         "Filter_Uuid": "{043cbde5-3878-5718-958f-ae75714df0df}",
-        "InputFile": "C:\\Users\\GlassDesktop\\Documents\\GitHub\\Chapter5-analysis\\Grain structure analysis\\BA_3D\\BA_microstructure_cleanfilled.dream3d",
+        "InputFile": "C:\\Users\\GlassDesktop\\Documents\\GitHub\\Chapter5-analysis\\Grain structure analysis\\3D\\BA_3D\\BA_microstructure_cleanfilled_grainshape_misor.dream3d",
         "InputFileDataContainerArrayProxy": {
             "Data Containers": [
                 {
@@ -107,6 +107,21 @@
                                         1
                                     ],
                                     "Flag": 2,
+                                    "Name": "FeatureReferenceMisorientations",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        488,
+                                        261,
+                                        540
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
                                     "Name": "MAD",
                                     "Object Type": "DataArray<float>",
                                     "Path": "/DataContainers/ImageDataContainer/CellData",
@@ -152,6 +167,21 @@
                                         1
                                     ],
                                     "Flag": 2,
+                                    "Name": "Sphericity",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        488,
+                                        261,
+                                        540
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
                                     "Name": "X",
                                     "Object Type": "DataArray<float>",
                                     "Path": "/DataContainers/ImageDataContainer/CellData",
@@ -168,6 +198,36 @@
                                     ],
                                     "Flag": 2,
                                     "Name": "Y",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        488,
+                                        261,
+                                        540
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "avg_misorientation",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellData",
+                                    "Tuple Dimensions": [
+                                        488,
+                                        261,
+                                        540
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "largest_area",
                                     "Object Type": "DataArray<float>",
                                     "Path": "/DataContainers/ImageDataContainer/CellData",
                                     "Tuple Dimensions": [
@@ -275,11 +335,102 @@
                                 },
                                 {
                                     "Component Dimensions": [
+                                        4
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "AvgQuats",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
                                         1
                                     ],
                                     "Flag": 2,
                                     "Name": "EquivalentDiameters",
                                     "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        3
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "EulerAngles",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "FeatureAvgMisorientations",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "LargestCrossSectionsXY",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MisorientationList",
+                                    "Object Type": "NeighborList<T>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "MisorientationList_NumNeighbors",
+                                    "Object Type": "DataArray<int32_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "NeighborList",
+                                    "Object Type": "NeighborList<T>",
                                     "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
                                     "Tuple Dimensions": [
                                         2403
@@ -304,8 +455,73 @@
                                         1
                                     ],
                                     "Flag": 2,
+                                    "Name": "NumNeighbors",
+                                    "Object Type": "DataArray<int32_t>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "SharedSurfaceAreaList",
+                                    "Object Type": "NeighborList<T>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "Sphericity",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "SurfaceAreaVolumeRatio",
+                                    "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
                                     "Name": "Volumes",
                                     "Object Type": "DataArray<float>",
+                                    "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
+                                    "Tuple Dimensions": [
+                                        2403
+                                    ],
+                                    "Version": 2
+                                },
+                                {
+                                    "Component Dimensions": [
+                                        1
+                                    ],
+                                    "Flag": 2,
+                                    "Name": "phases",
+                                    "Object Type": "DataArray<int32_t>",
                                     "Path": "/DataContainers/ImageDataContainer/CellFeatureData",
                                     "Tuple Dimensions": [
                                         2403
@@ -327,6 +543,16 @@
         "OverwriteExistingDataContainers": 0
     },
     "1": {
+        "CellPhasesArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "Phases",
+            "Data Container Name": "ImageDataContainer"
+        },
+        "CrystalStructuresArrayPath": {
+            "Attribute Matrix Name": "CellEnsembleData",
+            "Data Array Name": "CrystalStructures",
+            "Data Container Name": "ImageDataContainer"
+        },
         "FeatureIdsArrayPath": {
             "Attribute Matrix Name": "CellData",
             "Data Array Name": "FeatureIds",
@@ -334,121 +560,34 @@
         },
         "FilterVersion": "6.5.171",
         "Filter_Enabled": true,
-        "Filter_Human_Label": "Find Feature Largest Cross-Section Areas",
-        "Filter_Name": "FindLargestCrossSections",
-        "Filter_Uuid": "{9f77b4a9-6416-5220-a688-115f4e14c90d}",
-        "LargestCrossSectionsArrayPath": {
-            "Attribute Matrix Name": "CellFeatureData",
-            "Data Array Name": "LargestCrossSectionsXY",
-            "Data Container Name": "ImageDataContainer"
+        "Filter_Human_Label": "Find Kernel Average Misorientations",
+        "Filter_Name": "FindKernelAvgMisorientations",
+        "Filter_Uuid": "{88d332c1-cf6c-52d3-a38d-22f6eae19fa6}",
+        "KernelAverageMisorientationsArrayName": "KernelAverageMisorientations",
+        "KernelSize": {
+            "x": 1,
+            "y": 1,
+            "z": 1
         },
-        "Plane": 0
+        "QuatsArrayPath": {
+            "Attribute Matrix Name": "CellData",
+            "Data Array Name": "rotated_ori",
+            "Data Container Name": "ImageDataContainer"
+        }
     },
     "2": {
-        "CreatedArrayName": "largest_area",
-        "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
-            "Data Array Name": "FeatureIds",
-            "Data Container Name": "ImageDataContainer"
-        },
-        "FilterVersion": "1.2.828",
-        "Filter_Enabled": true,
-        "Filter_Human_Label": "Create Element Array from Feature Array",
-        "Filter_Name": "CopyFeatureArrayToElementArray",
-        "Filter_Uuid": "{99836b75-144b-5126-b261-b411133b5e8a}",
-        "SelectedFeatureArrayPath": {
-            "Attribute Matrix Name": "CellFeatureData",
-            "Data Array Name": "LargestCrossSectionsXY",
-            "Data Container Name": "ImageDataContainer"
-        }
-    },
-    "3": {
-        "CalculateSphericity": 1,
-        "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
-            "Data Array Name": "FeatureIds",
-            "Data Container Name": "ImageDataContainer"
-        },
-        "FilterVersion": "6.5.171",
-        "Filter_Enabled": true,
-        "Filter_Human_Label": "Find Surface Area to Volume & Sphericity",
-        "Filter_Name": "FindSurfaceAreaToVolume",
-        "Filter_Uuid": "{5d586366-6b59-566e-8de1-57aa9ae8a91c}",
-        "NumCellsArrayPath": {
-            "Attribute Matrix Name": "CellFeatureData",
-            "Data Array Name": "NumElements",
-            "Data Container Name": "ImageDataContainer"
-        },
-        "SphericityArrayName": "Sphericity",
-        "SurfaceAreaVolumeRatioArrayName": "SurfaceAreaVolumeRatio"
-    },
-    "4": {
-        "CreatedArrayName": "Sphericity",
-        "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
-            "Data Array Name": "FeatureIds",
-            "Data Container Name": "ImageDataContainer"
-        },
-        "FilterVersion": "1.2.828",
-        "Filter_Enabled": true,
-        "Filter_Human_Label": "Create Element Array from Feature Array",
-        "Filter_Name": "CopyFeatureArrayToElementArray",
-        "Filter_Uuid": "{99836b75-144b-5126-b261-b411133b5e8a}",
-        "SelectedFeatureArrayPath": {
-            "Attribute Matrix Name": "CellFeatureData",
-            "Data Array Name": "Sphericity",
-            "Data Container Name": "ImageDataContainer"
-        }
-    },
-    "5": {
-        "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
-            "Data Array Name": "FeatureIds",
-            "Data Container Name": "ImageDataContainer"
-        },
-        "FilterVersion": "6.5.171",
-        "Filter_Enabled": false,
-        "Filter_Human_Label": "Find Feature Largest Cross-Section Areas",
-        "Filter_Name": "FindLargestCrossSections",
-        "Filter_Uuid": "{9f77b4a9-6416-5220-a688-115f4e14c90d}",
-        "LargestCrossSectionsArrayPath": {
-            "Attribute Matrix Name": "CellFeatureData",
-            "Data Array Name": "LargestCrossSectionsXZ",
-            "Data Container Name": "ImageDataContainer"
-        },
-        "Plane": 1
-    },
-    "6": {
-        "FeatureIdsArrayPath": {
-            "Attribute Matrix Name": "CellData",
-            "Data Array Name": "FeatureIds",
-            "Data Container Name": "ImageDataContainer"
-        },
-        "FilterVersion": "6.5.171",
-        "Filter_Enabled": false,
-        "Filter_Human_Label": "Find Feature Largest Cross-Section Areas",
-        "Filter_Name": "FindLargestCrossSections",
-        "Filter_Uuid": "{9f77b4a9-6416-5220-a688-115f4e14c90d}",
-        "LargestCrossSectionsArrayPath": {
-            "Attribute Matrix Name": "CellFeatureData",
-            "Data Array Name": "LargestCrossSectionsYZ",
-            "Data Container Name": "ImageDataContainer"
-        },
-        "Plane": 2
-    },
-    "7": {
         "FilterVersion": "1.2.828",
         "Filter_Enabled": true,
         "Filter_Human_Label": "Write DREAM.3D Data File",
         "Filter_Name": "DataContainerWriter",
         "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
-        "OutputFile": "C:\\Users\\GlassDesktop\\Documents\\GitHub\\Chapter5-analysis\\Grain structure analysis\\BA_3D\\BA_microstructure_cleanfilled_grainshape.dream3d",
+        "OutputFile": "C:\\Users\\GlassDesktop\\Documents\\GitHub\\Chapter5-analysis\\Grain structure analysis\\3D\\BA_3D\\NoBA_microstructure_cleanfilled_grainshape_misor_KAM.dream3d",
         "WriteTimeSeries": 0,
         "WriteXdmfFile": 1
     },
     "PipelineBuilder": {
-        "Name": "Grain_shape",
-        "Number_Filters": 8,
+        "Name": "KAM",
+        "Number_Filters": 3,
         "Version": 6
     }
 }

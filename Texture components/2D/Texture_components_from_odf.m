@@ -12,9 +12,10 @@ setMTEXpref('zAxisDirection','outOfPlane');
 %% Specify File Names
 
 % path to files
-pname = 'D:\Large_EBSD\Top_BA';
+pname = 'NoBA\';
 matfiles = dir(fullfile(pname, '*.ctf'));
 nfiles = length(matfiles);
+delta= 24 % delta 25 for BA and delta 24 for No BA
 
 %% Initialize ODF cell array
 odf_cell = cell(1, nfiles);
@@ -37,12 +38,8 @@ for fileIdx = 1:nfiles
     %ori = ebsd('Aluminium').orientations;
 
     [grains, ebsd.grainId, ebsd.mis2mean] = calcGrains(ebsd, ...
-        'angle',10*degree); % 10*degree is a conversion radians-degrees
+        'angle',5*degree); % 10*degree is a conversion radians-degrees
 
-    ebsd = clean_grains(ebsd, grains, 2);
-
-    [grains, ebsd.grainId, ebsd.mis2mean] = calcGrains(ebsd, ...
-        'angle',10*degree);
     psi=calcKernel(grains('Aluminium').meanOrientation);
 
     ori = ebsd('Aluminium').orientations;
@@ -97,7 +94,7 @@ disp('Highest values and their corresponding orientations: ');
 %% Plot the odf in 3D
 plot3d(odf_new)
 %% Save the 'odf_new' variable to the .mat file
-fname = fullfile(pname, 'ODF', 'odf.mat');
+fname = fullfile(pname, 'odf.mat');
 save(fname, 'odf_new');
 
 %% Plot pole figure 1 1 1
@@ -143,7 +140,6 @@ Goss=orientation('Euler',0*degree,45*degree,0*degree);
 
 %% Calculate the percentage of each texture component
 
-delta= 37.9; % instert here the previous percentage of texture components
 
 % Define the names of the variables
 variableNames = {'Cube', 'S', 'Q', 'P', 'copper', 'R', 'cube22ND', 'cube22RD', 'cube22TD', 'cube45ND','E1','E2', 'F1', 'F2', 'D', 'Brass', 'Goss'};
@@ -173,3 +169,11 @@ plotAngleDistribution(gB.misorientation)
 %%
 image
 plotAxisDistribution(gB.misorientation,'contour')
+
+%% Save texture component percentages to CSV file
+
+% Create a table with texture component names and their corresponding percentages
+textureComponentsTable = table(variableNames', comp', 'VariableNames', {'TextureComponent', 'Percentage'});
+
+% Write the table to a CSV file
+writetable(textureComponentsTable, 'texture_components.csv');
