@@ -3370,7 +3370,7 @@
         "Filter_Human_Label": "Crop Geometry (Image)",
         "Filter_Name": "CropImageGeometry",
         "Filter_Uuid": "{baa4b7fe-31e5-5e63-a2cb-0bb9d844cfaf}",
-        "NewBoxDimensions": "X Range: -70.1327 to 300.601 (Delta: 370.734) 0-487 Voxels\nY Range: 340 to 601 (Delta: 261) 0-260 Voxels\nZ Range: 98.761 to 304.64 (Delta: 205.879) 0-270 Voxels\n",
+        "NewBoxDimensions": "X Range: -70.1327 to 300.601 (Delta: 370.734) 0-487 Voxels\nY Range: 340 to 601 (Delta: 261) 0-260 Voxels\nZ Range: 432.269 to 508.999 (Delta: 76.7297) 0-100 Voxels\n",
         "NewDataContainerName": "NewImageDataContainer",
         "OldBoxDimensions": "X Range: -70.1327 to 300.601 (Delta: 370.734) 0-487 Voxels\nY Range: 340 to 601 (Delta: 261) 0-260 Voxels\nZ Range: 98.761 to 508.999 (Delta: 410.238) 0-539 Voxels\n",
         "RenumberFeatures": 1,
@@ -3380,8 +3380,8 @@
         "XMin": 0,
         "YMax": 260,
         "YMin": 0,
-        "ZMax": 270,
-        "ZMin": 0
+        "ZMax": 539,
+        "ZMin": 439
     },
     "6": {
         "EquivalentDiametersArrayName": "EquivalentDiameters",
@@ -3457,7 +3457,7 @@
         "Filter_Human_Label": "Write DREAM.3D Data File",
         "Filter_Name": "DataContainerWriter",
         "Filter_Uuid": "{3fcd4c43-9d75-5b86-aad4-4441bc914f37}",
-        "OutputFile": "C:\\Users\\GlassDesktop\\Documents\\GitHub\\Chapter5-analysis\\Grain structure analysis\\3D\\BA_3D\\BA_microstructure_cleanfilled_grainshape-top.dream3d",
+        "OutputFile": "C:\\Users\\GlassDesktop\\Documents\\GitHub\\Chapter5-analysis\\Grain structure analysis\\3D\\BA_3D\\BA_microstructure_cleanfilled_grainshape-top100.dream3d",
         "WriteTimeSeries": 0,
         "WriteXdmfFile": 1
     },
