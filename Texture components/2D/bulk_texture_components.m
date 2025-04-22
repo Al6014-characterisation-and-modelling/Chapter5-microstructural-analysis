@@ -12,7 +12,6 @@ setMTEXpref('zAxisDirection','outOfPlane');
 %% Import the sample I want to plot and the direction of the cross section
 alloy     = 'NoBA';    % here I choose BA or NoBA
 direction = 'RD';    % here I choose RD or TD cross section direction
-delta= 25 % delta 25 for BA and delta 24 for No BA
 
 % initialize figname
 figname = '';
@@ -24,8 +23,7 @@ if strcmp(alloy, 'BA') && strcmp(direction, 'TD')
     figname = 'BA_TD_';
     delta= 25 % delta 25 for BA and delta 24 for No BA
     % Define regions for top & bottom surfaces
-    region_top    = [80  -2178 6800 200];   % BA_TD - top surface
-    region_bottom = [80  -2964 6800 200];   % BA_TD - bottom surface
+    region = [80 -2764 6800 586]; % large BA_TD - bulk
 end
 
 if strcmp(alloy, 'BA') && strcmp(direction, 'RD')
@@ -33,8 +31,7 @@ if strcmp(alloy, 'BA') && strcmp(direction, 'RD')
     rot1    = rotation('Euler',   0*degree,   0*degree,   0*degree);
     rot2    = rotation('Euler',   0*degree,   0*degree,  -0.2*degree);
     delta= 25 % delta 25 for BA and delta 24 for No BA
-    region_top    = [3500 -390 6800 200];    % BA_RD - top (use same as large map)
-    region_bottom = [3500 -1176 6800 200];   % BA_RD - bottom (use same as large map)
+    region = [3500 -976 6800 586] % bulk BA_RD
     figname = 'BA_RD_';
 end
 
@@ -43,8 +40,7 @@ if strcmp(alloy, 'NoBA') && strcmp(direction, 'TD')
     rot1    = rotation('Euler', 90*degree, 90*degree,   0*degree);
     rot2    = rotation('Euler',  0*degree,   0*degree, -0.8*degree);
     delta= 24 % delta 25 for BA and delta 24 for No BA
-    region_top    = [0 -460 6800 200];    % NoBA_TD - top surface
-    region_bottom = [0 -1200 6800 200];    % NoBA_TD - bottom surface
+    region = [0 -1000 6800 540]; % bulk NoBA TD 
     figname = 'NoBA_TD_';
 end
 
@@ -53,8 +49,7 @@ if strcmp(alloy, 'NoBA') && strcmp(direction, 'RD')
     rot1    = rotation('Euler',   0*degree,   0*degree,   0*degree);
     rot2    = rotation('Euler',   0*degree,   0*degree,   0.5*degree);
     delta= 24 % delta 25 for BA and delta 24 for No BA
-    region_top    = [1150 -240 6800 200];   % NoBA_RD - top surface
-    region_bottom = [1150 -980 6800 200];   % NoBA_RD - bottom surface  
+    region = [1150 -780 6800 540]; % bulk NoBA RD 
     figname = 'NoBA_RD_';
 end
 
@@ -66,25 +61,21 @@ function e = load_and_crop_region(fname, CS, rot1, rot2, region)
     e = e(inpolygon(e, region));
 end
 
-%% Load, rotate and crop top & bottom surfaces
-ebsd_top    = load_and_crop_region(fname, CS, rot1, rot2, region_top);
-ebsd_bottom = load_and_crop_region(fname, CS, rot1, rot2, region_bottom);
-
-% Concatenate into one EBSD object for surfaces
-ebsd_surface = [ebsd_top; ebsd_bottom];
+%% Load, rotate and crop bulk ebsd
+ebsd_bulk    = load_and_crop_region(fname, CS, rot1, rot2, region);
 
 %% Plotting the complete EBSD map of combined surface
 figure;
-plot(ebsd_surface);
-IPF_map(ebsd_surface, 'Aluminium', vector3d.Z);
-saveas(gcf, [figname 'surface_ebsd_ipfZ.png']);
+plot(ebsd_bulk);
+IPF_map(ebsd_bulk, 'Aluminium', vector3d.Z);
+saveas(gcf, [figname 'bulk_ebsd_ipfZ.png']);
 
 %% Calculate grains on the combined surface
-[grains_surf, ebsd_surface.grainId, ebsd_surface.mis2mean] = calcGrains(ebsd_surface, 'angle', 5*degree);
-psi = calcKernel(grains_surf('Aluminium').meanOrientation);
+[grains_bulk, ebsd_bulk.grainId, ebsd_bulk.mis2mean] = calcGrains(ebsd_bulk, 'angle', 5*degree);
+psi = calcKernel(grains_bulk('Aluminium').meanOrientation);
 
 %% 5. Compute ODF
-ori = ebsd_surface('Aluminium').orientations;
+ori = ebsd_bulk('Aluminium').orientations;
 ori.SS = specimenSymmetry('orthorhombic');
 odf = calcDensity(ori, 'kernel', psi);
 odf.SS = specimenSymmetry('222');
@@ -145,5 +136,5 @@ disp(['Total percentage: ', num2str(sum(comp), '%.1f')]);
 textureComponentsTable = table(variableNames', comp', 'VariableNames', {'TextureComponent', 'Percentage'});
 
 % Write the table to a CSV file
-writetable(textureComponentsTable, [figname 'texture_components_surface.csv']);
+writetable(textureComponentsTable, [figname 'texture_components_bulk.csv']);
 
