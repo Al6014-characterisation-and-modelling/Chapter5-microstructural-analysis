@@ -21,11 +21,14 @@ if strcmp(alloy, 'BA') && strcmp(direction, 'TD')
     fname  = 'BA/BA_NDTD.ctf';
     rot1   = rotation('Euler', 90*degree, 90*degree,   0*degree);
     rot2   = rotation('Euler',  0*degree,   0*degree, 1.1*degree);
-    figname = 'BA_TD_';
     delta= 25 % delta 25 for BA and delta 24 for No BA
     % Define regions for top & bottom surfaces
     region_top    = [80  -2178 6800 200];   % BA_TD - top surface
     region_bottom = [80  -2964 6800 200];   % BA_TD - bottom surface
+    figname = 'BA_TD_surface_';
+    region_top    = [80  -2278 6800 100];   % BA_TD - top subsurface
+    region_bottom = [80  -2764 6800 100];   % BA_TD - bottom subsurface
+    figname = 'BA_TD_subsurface_';
 end
 
 if strcmp(alloy, 'BA') && strcmp(direction, 'RD')
@@ -35,7 +38,10 @@ if strcmp(alloy, 'BA') && strcmp(direction, 'RD')
     delta= 25 % delta 25 for BA and delta 24 for No BA
     region_top    = [3500 -390 6800 200];    % BA_RD - top (use same as large map)
     region_bottom = [3500 -1176 6800 200];   % BA_RD - bottom (use same as large map)
-    figname = 'BA_RD_';
+    figname = 'BA_RD_surface_';
+    region_top    = [3500 -490 6800 100];    % BA_RD - top (use same as large map)
+    region_bottom = [3500 -976 6800 100];   % BA_RD - bottom (use same as large map)
+    figname = 'BA_RD_subsurface_';
 end
 
 if strcmp(alloy, 'NoBA') && strcmp(direction, 'TD')
@@ -45,7 +51,10 @@ if strcmp(alloy, 'NoBA') && strcmp(direction, 'TD')
     delta= 24 % delta 25 for BA and delta 24 for No BA
     region_top    = [0 -460 6800 200];    % NoBA_TD - top surface
     region_bottom = [0 -1200 6800 200];    % NoBA_TD - bottom surface
-    figname = 'NoBA_TD_';
+    figname = 'NoBA_TD_surface_';
+    region_top    = [0 -560 6800 100];    % NoBA_TD - top surface
+    region_bottom = [0 -1000 6800 100];    % NoBA_TD - bottom surface
+    figname = 'NoBA_TD_subsurface_';
 end
 
 if strcmp(alloy, 'NoBA') && strcmp(direction, 'RD')
@@ -55,7 +64,10 @@ if strcmp(alloy, 'NoBA') && strcmp(direction, 'RD')
     delta= 24 % delta 25 for BA and delta 24 for No BA
     region_top    = [1150 -240 6800 200];   % NoBA_RD - top surface
     region_bottom = [1150 -980 6800 200];   % NoBA_RD - bottom surface  
-    figname = 'NoBA_RD_';
+    figname = 'NoBA_RD_surface_';
+    region_top    = [1150 -340 6800 100];   % NoBA_RD - top surface
+    region_bottom = [1150 -780 6800 100];   % NoBA_RD - bottom surface  
+    figname = 'NoBA_RD_subsurface_';
 end
 
 %% Helper function to load, rotate and crop a region
@@ -145,5 +157,5 @@ disp(['Total percentage: ', num2str(sum(comp), '%.1f')]);
 textureComponentsTable = table(variableNames', comp', 'VariableNames', {'TextureComponent', 'Percentage'});
 
 % Write the table to a CSV file
-writetable(textureComponentsTable, [figname 'texture_components_surface.csv']);
+writetable(textureComponentsTable, [figname 'texture_components.csv']);
 
