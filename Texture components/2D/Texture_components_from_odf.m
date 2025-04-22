@@ -12,7 +12,7 @@ setMTEXpref('zAxisDirection','outOfPlane');
 %% Specify File Names
 
 % path to files
-pname = 'NoBA\';
+pname = 'BA\';
 matfiles = dir(fullfile(pname, '*.ctf'));
 nfiles = length(matfiles);
 delta= 24 % delta 25 for BA and delta 24 for No BA
