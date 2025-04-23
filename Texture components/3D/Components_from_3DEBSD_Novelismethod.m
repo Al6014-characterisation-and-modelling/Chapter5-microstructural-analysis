@@ -13,14 +13,16 @@ setMTEXpref('zAxisDirection','outOfPlane');
 
 % path to files
 % 3D-EBSD BA
-%pname = 'C:\Users\GlassDesktop\Downloads\Modelling work\CPM using 3d microstructures\1- 3D-EBSD\BA_3Dmicrostructure\SlicesXY';
-%matfiles = dir(fullfile(pname, '*.ctf'));
-%nfiles = length(matfiles);
-
-% 3D-EBSD No BA
-pname = 'C:\Users\GlassDesktop\Downloads\Modelling work\CPM using 3d microstructures\1- 3D-EBSD\No_BA_2nd_3Dmicrostructure\SlicesXY';
+pname = 'BA\slices';
 matfiles = dir(fullfile(pname, '*.ctf'));
 nfiles = length(matfiles);
+figname = 'BA_3D_';
+
+% 3D-EBSD No BA
+%pname = 'NoBA\slices';
+%matfiles = dir(fullfile(pname, '*.ctf'));
+%nfiles = length(matfiles);
+%figname = 'NoBA_3D_';
 
 %% Initialize variables for texture components
 totalBs = 0;
@@ -194,4 +196,3 @@ ylabel('Volume fraction (%)')
 axis([0 12 0 18])
 
 set(gca, 'XTickLabel', TextureComps)
-

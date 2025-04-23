@@ -12,10 +12,20 @@ setMTEXpref('zAxisDirection','outOfPlane');
 %% Specify File Names
 
 % path to files
-pname = 'BA\';
+%pname = 'BA\SlicesXY';
+%matfiles = dir(fullfile(pname, '*.ctf'));
+%nfiles = length(matfiles);
+%figname = 'BA_3D_';
+%delta= 25 % delta 25 for BA and delta 24 for No BA
+
+pname = 'NoBA\SlicesXY';
 matfiles = dir(fullfile(pname, '*.ctf'));
 nfiles = length(matfiles);
+figname = 'NoBA_3D_';
 delta= 24 % delta 25 for BA and delta 24 for No BA
+
+%delta= 22 % delta 20 for NoBA and delta 25 for BA
+
 
 %% Initialize ODF cell array
 odf_cell = cell(1, nfiles);
@@ -38,7 +48,7 @@ for fileIdx = 1:nfiles
     %ori = ebsd('Aluminium').orientations;
 
     [grains, ebsd.grainId, ebsd.mis2mean] = calcGrains(ebsd, ...
-        'angle',5*degree); % 10*degree is a conversion radians-degrees
+        'angle',5*degree); 
 
     psi=calcKernel(grains('Aluminium').meanOrientation);
 
@@ -59,55 +69,11 @@ for fileIdx = 1:nfiles
 end
 odf_new = odf_new / nfiles;
 
-%% Visualize odf
-
-odf_new.SS = specimenSymmetry('222');
-
-% Create a figure
-figure;
-
-% Loop through the three graphs
-for i = 1:3
-    % Create a subplot
-    subplot(1, 3, i);
-
-    % Plot the ODF with the specified properties
-    plot(odf_new,'phi2',[0, 0, 90]*degree,'antipodal','linewidth',1,'cs','ss',...
-        'contourf',0:0.5:6,'minmax','left','colorRange',[0,6],'colorbar','on');
-    
-    % Set the colormap to "sky"
-    colormap("sky");
-
-    % Reverse the y-axis
-    ax = gca;
-    ax.YDir = 'reverse';
-
-    % Add the MTEX colorbar
-    mtexColorbar;
-end
-
 %% Calculate the three highest values in the odf and the corresponding orientations
 disp('Highest values and their corresponding orientations: ');
 
 [value,orimax] = max(odf_new,'numLocal',3)
 
-%% Plot the odf in 3D
-plot3d(odf_new)
-%% Save the 'odf_new' variable to the .mat file
-fname = fullfile(pname, 'odf.mat');
-save(fname, 'odf_new');
-
-%% Plot pole figure 1 1 1
-
-cs = crystalSymmetry('m-3m');
-plotPDF(odf_new,Miller(1,1,1,cs),'antipodal','contourf',0:0.1:3,'minmax','colorRange',[0,3],'colorbar','on','complete','upper')
-view(90, -90);
-mtexColorbar;
-mtexColorMap sky
-title('1 1 1', 'Position', [0, 0], 'HorizontalAlignment', 'center');
-% Add a title annotation at the top
-annotation('textbox', [0.05, 0.85, 0.20, 0.14], 'String', '', ...
-    'HorizontalAlignment', 'center', 'FontSize', 20, 'EdgeColor', 'none');
 
 %% Calculation of texture components
 disp('Total percentage of texture components: ');
@@ -159,16 +125,7 @@ end
 disp(['Total percentage: ', num2str(sum(comp), '%.1f')]);
 %This total percentage should be similar to total percentage of texture
 %components, if not, modify delta slightly
-%% Load ODF file to check if it was saved correctly
-%pname='C:\Users\GlassDesktop\Dropbox (The University of Manchester)\4th year - Crystal Plasticity and Microstructure Modelling for Rolled Aluminium Sheet\Experimental\3D-EBSD\No BA\SlicesXY'
-%fname = fullfile(pname, 'ODF', 'odf_NoBA.mat');
-%a=load(fname)
-gB = grains.boundary('Aluminium','Aluminium');
-plotAngleDistribution(gB.misorientation)
 
-%%
-image
-plotAxisDistribution(gB.misorientation,'contour')
 
 %% Save texture component percentages to CSV file
 
@@ -176,4 +133,9 @@ plotAxisDistribution(gB.misorientation,'contour')
 textureComponentsTable = table(variableNames', comp', 'VariableNames', {'TextureComponent', 'Percentage'});
 
 % Write the table to a CSV file
-writetable(textureComponentsTable, 'texture_components.csv');
+writetable(textureComponentsTable,  [figname 'texture_components.csv']);
+
+%% save data in odf.mat
+
+save([figname 'odf.mat'], 'odf_new');
+

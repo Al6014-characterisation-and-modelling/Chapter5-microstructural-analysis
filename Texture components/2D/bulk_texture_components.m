@@ -21,36 +21,37 @@ if strcmp(alloy, 'BA') && strcmp(direction, 'TD')
     rot1   = rotation('Euler', 90*degree, 90*degree,   0*degree);
     rot2   = rotation('Euler',  0*degree,   0*degree, 1.1*degree);
     figname = 'BA_TD_';
-    delta= 25 % delta 25 for BA and delta 24 for No BA
     % Define regions for top & bottom surfaces
     region = [80 -2764 6800 586]; % large BA_TD - bulk
+    delta= 25 % delta 25 for BA and delta 24 for No BA
 end
 
 if strcmp(alloy, 'BA') && strcmp(direction, 'RD')
     fname   = 'BA/BA_NDRD.ctf';
     rot1    = rotation('Euler',   0*degree,   0*degree,   0*degree);
     rot2    = rotation('Euler',   0*degree,   0*degree,  -0.2*degree);
-    delta= 25 % delta 25 for BA and delta 24 for No BA
     region = [3500 -976 6800 586] % bulk BA_RD
     figname = 'BA_RD_';
+    delta= 25 % delta 25 for BA and delta 24 for No BA
 end
 
 if strcmp(alloy, 'NoBA') && strcmp(direction, 'TD')
     fname   = 'NoBA/NoBA_NDTD.ctf';
     rot1    = rotation('Euler', 90*degree, 90*degree,   0*degree);
     rot2    = rotation('Euler',  0*degree,   0*degree, -0.8*degree);
-    delta= 24 % delta 25 for BA and delta 24 for No BA
     region = [0 -1000 6800 540]; % bulk NoBA TD 
     figname = 'NoBA_TD_';
+    delta= 24 % delta 25 for BA and delta 24 for No BA
+
 end
 
 if strcmp(alloy, 'NoBA') && strcmp(direction, 'RD')
     fname   = 'NoBA/NoBA_NDRD.ctf';
     rot1    = rotation('Euler',   0*degree,   0*degree,   0*degree);
     rot2    = rotation('Euler',   0*degree,   0*degree,   0.5*degree);
-    delta= 24 % delta 25 for BA and delta 24 for No BA
     region = [1150 -780 6800 540]; % bulk NoBA RD 
     figname = 'NoBA_RD_';
+    delta= 24 % delta 25 for BA and delta 24 for No BA
 end
 
 %% Helper function to load, rotate and crop a region
@@ -102,9 +103,15 @@ prefs = {
 };
 names = {'Cube','S','Q','P','Copper','R','cube22ND','cube22RD','cube22TD','cube45ND','E1','E2','F1','F2','D','Brass','Goss'};
 
-%% 7. Calculate Texture Component Percentages
 
-vol_perc = volume(odf, [prefs{:}], delta*degree) * 100;
+
+%% Calculation of texture components
+disp('Total percentage of texture components: ');
+%CalclComponents returns the prefered orientation and the percentage of 
+% orientations that crawled to each of them.
+[component, vol] = calcComponents(odf);
+component , vol*100 
+% this will give me the total percentage of texture components
 
 
 %% 8. Calculate the percentage of each texture component

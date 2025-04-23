@@ -20,60 +20,37 @@ if strcmp(alloy, 'BA') && strcmp(direction, 'TD')
     fname  = 'BA/BA_NDTD.ctf';
     rot1   = rotation('Euler', 90*degree, 90*degree,   0*degree);
     rot2   = rotation('Euler',  0*degree,   0*degree, 1.1*degree);
-    % Define regions for top & bottom surfaces
-    region_top    = [80  -2178 6800 200];   % BA_TD - top surface
-    region_bottom = [80  -2964 6800 200];   % BA_TD - bottom surface
-    figname = 'BA_TD_surface_';
-
-    region_top    = [80  -2278 6800 100];   % BA_TD - top subsurface
-    region_bottom = [80  -2764 6800 100];   % BA_TD - bottom subsurface
-    figname = 'BA_TD_subsurface_';
+    figname = 'BA_TD_';
     delta= 25 % delta 25 for BA and delta 24 for No BA
+    % Define regions for top & bottom surfaces
+    region = [80 -2964 6800 986]; % large BA_TD
 end
 
 if strcmp(alloy, 'BA') && strcmp(direction, 'RD')
     fname   = 'BA/BA_NDRD.ctf';
     rot1    = rotation('Euler',   0*degree,   0*degree,   0*degree);
     rot2    = rotation('Euler',   0*degree,   0*degree,  -0.2*degree);
-
-    region_top    = [3500 -390 6800 200];    % BA_RD - top (use same as large map)
-    region_bottom = [3500 -1176 6800 200];   % BA_RD - bottom (use same as large map)
-    figname = 'BA_RD_surface_';
-
-    region_top    = [3500 -490 6800 100];    % BA_RD - top (use same as large map)
-    region_bottom = [3500 -976 6800 100];   % BA_RD - bottom (use same as large map)
-    figname = 'BA_RD_subsurface_';
     delta= 25 % delta 25 for BA and delta 24 for No BA
+    region = [3500 -1176 6800 986] %[700 -1176 15000 986] large BA_RD
+    figname = 'BA_RD_';
 end
 
 if strcmp(alloy, 'NoBA') && strcmp(direction, 'TD')
     fname   = 'NoBA/NoBA_NDTD.ctf';
     rot1    = rotation('Euler', 90*degree, 90*degree,   0*degree);
     rot2    = rotation('Euler',  0*degree,   0*degree, -0.8*degree);
-
-    region_top    = [0 -460 6800 200];    % NoBA_TD - top surface
-    region_bottom = [0 -1200 6800 200];    % NoBA_TD - bottom surface
-    figname = 'NoBA_TD_surface_';
-
-    region_top    = [0 -560 6800 100];    % NoBA_TD - top surface
-    region_bottom = [0 -1000 6800 100];    % NoBA_TD - bottom surface
-    figname = 'NoBA_TD_subsurface_';
     delta= 24 % delta 25 for BA and delta 24 for No BA
+    region = [0 -1200 6800 940]; % large NoBA_TD - use same area than BA map
+    figname = 'NoBA_TD_';
 end
 
 if strcmp(alloy, 'NoBA') && strcmp(direction, 'RD')
     fname   = 'NoBA/NoBA_NDRD.ctf';
     rot1    = rotation('Euler',   0*degree,   0*degree,   0*degree);
     rot2    = rotation('Euler',   0*degree,   0*degree,   0.5*degree);
-
-    region_top    = [1150 -240 6800 200];   % NoBA_RD - top surface
-    region_bottom = [1150 -980 6800 200];   % NoBA_RD - bottom surface  
-    figname = 'NoBA_RD_surface_';
-        
-    region_top    = [1150 -340 6800 100];   % NoBA_RD - top surface
-    region_bottom = [1150 -780 6800 100];   % NoBA_RD - bottom surface  
-    figname = 'NoBA_RD_subsurface_';
     delta= 24 % delta 25 for BA and delta 24 for No BA
+    region = [1150 -980 6800 940]; %[250 -980 14000 940] larger area
+    figname = 'NoBA_RD_';
 end
 
 %% Helper function to load, rotate and crop a region
@@ -84,25 +61,21 @@ function e = load_and_crop_region(fname, CS, rot1, rot2, region)
     e = e(inpolygon(e, region));
 end
 
-%% Load, rotate and crop top & bottom surfaces
-ebsd_top    = load_and_crop_region(fname, CS, rot1, rot2, region_top);
-ebsd_bottom = load_and_crop_region(fname, CS, rot1, rot2, region_bottom);
-
-% Concatenate into one EBSD object for surfaces
-ebsd_surface = [ebsd_top; ebsd_bottom];
+%% Load, rotate and crop bulk ebsd
+ebsd_bulk    = load_and_crop_region(fname, CS, rot1, rot2, region);
 
 %% Plotting the complete EBSD map of combined surface
 figure;
-plot(ebsd_surface);
-IPF_map(ebsd_surface, 'Aluminium', vector3d.Z);
-saveas(gcf, [figname 'surface_ebsd_ipfZ.png']);
+plot(ebsd_bulk);
+IPF_map(ebsd_bulk, 'Aluminium', vector3d.Z);
+saveas(gcf, [figname 'bulk_ebsd_ipfZ.png']);
 
 %% Calculate grains on the combined surface
-[grains_surf, ebsd_surface.grainId, ebsd_surface.mis2mean] = calcGrains(ebsd_surface, 'angle', 5*degree);
-psi = calcKernel(grains_surf('Aluminium').meanOrientation);
+[grains_bulk, ebsd_bulk.grainId, ebsd_bulk.mis2mean] = calcGrains(ebsd_bulk, 'angle', 5*degree);
+psi = calcKernel(grains_bulk('Aluminium').meanOrientation);
 
 %% 5. Compute ODF
-ori = ebsd_surface('Aluminium').orientations;
+ori = ebsd_bulk('Aluminium').orientations;
 ori.SS = specimenSymmetry('orthorhombic');
 odf = calcDensity(ori, 'kernel', psi);
 odf.SS = specimenSymmetry('222');
@@ -129,12 +102,7 @@ prefs = {
 };
 names = {'Cube','S','Q','P','Copper','R','cube22ND','cube22RD','cube22TD','cube45ND','E1','E2','F1','F2','D','Brass','Goss'};
 
-%% 7. Calculate Texture Component Percentages
-
-%vol_perc = volume(odf, [prefs{:}], delta*degree) ;
-
 %% Calculation of texture components
-
 disp('Total percentage of texture components: ');
 %CalclComponents returns the prefered orientation and the percentage of 
 % orientations that crawled to each of them.
@@ -168,75 +136,9 @@ disp(['Total percentage: ', num2str(sum(comp), '%.1f')]);
 
 %% 9. Save texture component percentages to CSV file
 
-% Normalise the component percentages
-%comp_normalised = comp / sum(comp) * 100;
-
-% Save the normalised values to the CSV file
+% Create a table with texture component names and their corresponding percentages
 textureComponentsTable = table(variableNames', comp', 'VariableNames', {'TextureComponent', 'Percentage'});
 
 % Write the table to a CSV file
-writetable(textureComponentsTable, [figname 'texture_components.csv']);
+writetable(textureComponentsTable, [figname 'texture_components_overall.csv']);
 
-% Range of delta values to test (in degrees)
-delta_range = 5:1:30;
-
-% Initialize arrays
-total_percs = zeros(size(delta_range));
-component_matrix = zeros(length(variableNames), length(delta_range));
-
-% Loop through deltas
-for i = 1:length(delta_range)
-    d = delta_range(i);
-    
-    % Calculate volume for each component at current delta
-    comp = volume(odf, [prefs{:}], d * degree);
-    
-    % Store total and individual component volumes
-    total_percs(i) = sum(comp);
-    component_matrix(:, i) = comp(:);
-end
-
-% Plot total percentage vs delta
-figure;
-plot(delta_range, total_percs, '-o', 'LineWidth', 2);
-xlabel('Delta (degrees)');
-ylabel('Total Volume Percentage (%)');
-title('Sensitivity of Total Texture Content to Delta');
-grid on;
-
-% Optional: Plot individual component trends
-figure;
-hold on;
-for j = 1:length(variableNames)
-    plot(delta_range, component_matrix(j, :), 'DisplayName', variableNames{j});
-end
-xlabel('Delta (degrees)');
-ylabel('Volume Percentage (%)');
-title('Component Percentages vs Delta');
-legend('show');
-grid on;
-
-
-%%
-% Calculate component percentages at this delta
-comp_raw = volume(odf, [prefs{:}], delta /10 * degree);
-
-% Bar plot without total (RAW percentages)
-figure;
-bar(comp_raw, 'FaceColor', [0.3 0.6 0.9]);
-set(gca, 'XTickLabel', variableNames, 'XTick', 1:numel(variableNames), 'XTickLabelRotation', 45);
-ylabel('Volume Percentage (%)');  % Corrected label
-title(['Texture Component Distribution at \delta = ' num2str(delta) '°']);
-grid on;
-
-%%
-% Append total for visual reference
-comp_with_total = [comp_raw, sum(comp_raw)];
-labels_with_total = [variableNames, {'Total'}];
-
-figure;
-bar(comp_with_total, 'FaceColor', [0.3 0.6 0.9]);
-set(gca, 'XTickLabel', labels_with_total, 'XTick', 1:numel(labels_with_total), 'XTickLabelRotation', 45);
-ylabel('Volume Percentage (%)');  % Not "Normalised"
-title(['Texture Component Distribution at \delta = ' num2str(delta) '°']);
-grid on;
